@@ -24,14 +24,14 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-1
+        aws-region: eu-west-3
 
     - name: Install amazon.lambda.tools
       run: dotnet tool install -g amazon.lambda.tools
 
     - name: Make Zip File      
-      run: dotnet lambda package deploy.zip -pl ./DotNetLambdaFunction/
+      run: dotnet lambda package deploy.zip -pl ./AwsLambdaBasics/src/AwsLambdaBasics
         
     - name: Update Lambda Function
-      run: aws lambda update-function-code --function-name=DotNetLambdaFunction --zip-file=fileb://deploy.zip
+      run: aws lambda update-function-code --function-name=AwsLambdaBasics --zip-file=fileb://deploy.zip
 

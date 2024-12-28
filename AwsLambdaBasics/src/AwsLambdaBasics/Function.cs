@@ -8,7 +8,7 @@ namespace AwsLambdaBasics;
 
 public class Function
 {
-    [LambdaFunction(PackageType = LambdaPackageType.Image)]
+    [LambdaFunction(PackageType = LambdaPackageType.Zip)]
     [RestApi(LambdaHttpMethod.Get, "/")]
     public IHttpResult Get(ILambdaContext context)
     {
