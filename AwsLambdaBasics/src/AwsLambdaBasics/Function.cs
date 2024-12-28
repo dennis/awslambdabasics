@@ -1,6 +1,8 @@
 using Amazon.Lambda.Annotations;
 using Amazon.Lambda.Annotations.APIGateway;
+using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
+using System.Net;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
@@ -10,10 +12,14 @@ public class Function
 {
     [LambdaFunction(PackageType = LambdaPackageType.Zip)]
     [RestApi(LambdaHttpMethod.Get, "/")]
-    public IHttpResult Get(ILambdaContext context)
+    public async Task<APIGatewayProxyResponse> Get(APIGatewayProxyRequest request, ILambdaContext context)
     {
         context.Logger.LogInformation("Handling the 'Get' Request");
 
-        return HttpResults.Ok("Hello AWS Serverless");
+        return new APIGatewayProxyResponse
+        {
+            StatusCode = (int)HttpStatusCode.OK,
+            Body = "{}"
+        };
     }
 }
