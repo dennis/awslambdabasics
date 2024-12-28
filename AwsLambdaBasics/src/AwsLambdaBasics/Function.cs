@@ -6,7 +6,7 @@ using Amazon.Lambda.Core;
 
 namespace AwsLambdaBasics;
 
-public class Functions
+public class Function
 {
     [LambdaFunction(PackageType = LambdaPackageType.Image)]
     [RestApi(LambdaHttpMethod.Get, "/")]
