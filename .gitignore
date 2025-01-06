@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/AwsLambdaBasics
+/AwsLambdaBasics/src/AwsLambdaBasics/bin
+/AwsLambdaBasics/src/AwsLambdaBasics/obj
