@@ -42,6 +42,7 @@ public class Function
         {
             if(ClientId is null)
             {
+                /*
                 context.Logger.LogCritical("Getting secrets");
 
                 var secrets = await GetSecrets(context.Logger);
@@ -49,6 +50,8 @@ public class Function
                 context.Logger.LogCritical("Got secrets");
 
                 ClientId = secrets["FACEBOOK_CLIENT_ID"];
+                */
+                ClientId = "99c9954dad1c8f991b40537189987b07";
 
 
                 if (ClientId is null)
