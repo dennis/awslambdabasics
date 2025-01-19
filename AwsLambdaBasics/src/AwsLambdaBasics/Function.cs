@@ -17,7 +17,7 @@ public class Function
     private string? ClientId { get; set; }
     private const string RedirectUri = "https://localhost/callback"; // Replace with your redirect URI
 
-    public async Task<Dictionary<string, string>> GetSecrets()
+    private async Task<Dictionary<string, string>> GetSecrets()
     {
         var client = new AmazonSecretsManagerClient();
         var request = new GetSecretValueRequest
@@ -67,6 +67,7 @@ public class Function
         catch (Exception ex)
         {
             context.Logger.LogError($"Error initiating Facebook authentication flow: {ex.Message}");
+            context.Logger.Log(LogLevel.Critical.ToString(), ex, ex.Message);
 
             return new APIGatewayProxyResponse
             {
