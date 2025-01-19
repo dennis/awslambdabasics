@@ -17,7 +17,7 @@ public class Function
     private string? ClientId { get; set; }
     private const string RedirectUri = "https://localhost/callback"; // Replace with your redirect URI
 
-    private async Task<Dictionary<string, string>> GetSecrets()
+    private async Task<Dictionary<string, string>> GetSecrets(ILambdaLogger logger)
     {
         var client = new AmazonSecretsManagerClient();
         var request = new GetSecretValueRequest
@@ -28,6 +28,7 @@ public class Function
         var response = await client.GetSecretValueAsync(request);
         var secretString = response.SecretString;
 
+        logger.LogCritical("Got secret, deserializing it: " + secretString);
 
         return JsonSerializer.Deserialize<Dictionary<string, string>>(secretString) ?? [];
     }
@@ -41,11 +42,16 @@ public class Function
         {
             if(ClientId is null)
             {
-                var secrets = await GetSecrets();
+                context.Logger.LogCritical("Getting secrets");
+
+                var secrets = await GetSecrets(context.Logger);
+
+                context.Logger.LogCritical("Got secrets");
 
                 ClientId = secrets["FACEBOOK_CLIENT_ID"];
 
-                if(ClientId is null)
+
+                if (ClientId is null)
                 {
                     context.Logger.LogError("FACEBOK_CLIENT_ID secret is NULL");
 
@@ -67,7 +73,7 @@ public class Function
         }
         catch (Exception ex)
         {
-            context.Logger.LogError($"Error initiating Facebook authentication flow: {ex.Message}");
+            context.Logger.LogCritical($"Error initiating Facebook authentication flow: {ex.Message}");
             context.Logger.Log(LogLevel.Critical.ToString(), ex, ex.Message);
 
             return new APIGatewayProxyResponse
