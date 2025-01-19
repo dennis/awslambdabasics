@@ -51,7 +51,7 @@ public class Function
                     return new APIGatewayProxyResponse
                     {
                         StatusCode = 500,
-                        Body = JsonSerializer.Serialize(new { error = "Internal Server Error" })
+                        Body = JsonSerializer.Serialize(new { error = "Internal Server Error", message = "ClientId is NULL"})
                     };
                 }
             }
@@ -71,7 +71,7 @@ public class Function
             return new APIGatewayProxyResponse
             {
                 StatusCode = 500,
-                Body = JsonSerializer.Serialize(new { error = "Internal Server Error" })
+                Body = JsonSerializer.Serialize(new { error = "Internal Server Error", message = ex.Message, trace = ex.StackTrace })
             };
         }
     }
