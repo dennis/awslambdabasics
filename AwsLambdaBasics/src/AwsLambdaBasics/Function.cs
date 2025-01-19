@@ -36,6 +36,7 @@ public class Function
     [RestApi(LambdaHttpMethod.Get, "/")]
     public async Task<APIGatewayProxyResponse> Get(APIGatewayProxyRequest request, ILambdaContext context)
     {
+        context.Logger.LogCritical("HELLO WORLD");
         try
         {
             if(ClientId is null)
@@ -46,7 +47,7 @@ public class Function
 
                 if(ClientId is null)
                 {
-                    context.Logger.LogError($"FACEBOK_CLIENT_ID secret is NULL");
+                    context.Logger.LogError("FACEBOK_CLIENT_ID secret is NULL");
 
                     return new APIGatewayProxyResponse
                     {
